@@ -1,0 +1,15 @@
+{# Simple template located in the site-packages of the virtual enviroment #}
+{% extends 'bootstrap3/bootstrap3.html' %}
+{% load bootstrap3 %}
+
+{% block bootstrap3_title %}{% block title %}{{ title }}{% endblock %}{% endblock %}
+
+{% block bootstrap3_content %}
+    <div class="container">
+        {% block content %}(no content){% endblock %}
+        {% bootstrap_messages %}
+    </div>
+
+{% endblock %}
+
+{% block bootstrap3_extra_script %}{% block script %}{% endblock %}{% endblock %}

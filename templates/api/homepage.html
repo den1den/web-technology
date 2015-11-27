@@ -1,0 +1,22 @@
+{% extends 'api/base.html' %}
+{# Loads in the bootstrap tags (convient way of using bootstrap in django #}
+{% load bootstrap3 %}
+
+{% block content %}
+<div>
+    <a href="http://django-bootstrap3.readthedocs.org/en/latest/">
+        django-bootstrap3.readthedocs.org
+    </a><br />
+    <button id="api-call" class="btn btn-primary btn-lg" type="button">Do API</button>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+$(document).ready(function(){
+    $('#api-call').click(function () {
+        console.log("Button clicked");
+    });
+});
+</script>
+{% endblock %}
