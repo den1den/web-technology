@@ -1,0 +1,39 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.pager li {
+    display: none;
+}
+
+img.poster {
+    float: right;
+    max-height: 50%;
+    max-width: 25%;
+    margin: 0.5em;
+}
+
+@media screen and (max-device-width:480px) {
+    img.poster{
+        max-width: 50%;
+    }
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    /*background-color: #f5f5f5;*/
+}

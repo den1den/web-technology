@@ -5,11 +5,44 @@
 
 {% block bootstrap3_title %}{% block title %}{{ title }}{% endblock %}{% endblock %}
 
+{% block bootstrap3_extra_head %}
+    {% if template_url %}
+        <link href="{{ template_url }}" rel="stylesheet">
+    {% endif %}
+    <link href="{% static "style.css" %}" rel="stylesheet">
+{% endblock %}
+
 {% block bootstrap3_content %}
     <div class="container">
         {% block content %}(no content){% endblock %}
-        {% bootstrap_messages %}
     </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    <div class="dropup">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                            Theme <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            {% for theme in template_list %}
+                                <li>
+                                    <a href="/{{ theme }}">
+                                        {% if theme %}
+                                            {{ theme|title }}
+                                        {% else %}
+                                            None
+                                        {% endif %}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 {% endblock %}
 
 {% block bootstrap3_extra_script %}

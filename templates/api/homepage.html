@@ -1,39 +1,47 @@
 {% extends 'api/base.html' %}
-{# Loads in the bootstrap tags (convient way of using bootstrap in django #}
 {% load bootstrap3 %}
+{% load staticfiles %}
 
 {% block content %}
-<style>
-h1{
-    text-align: center;
-}
-.pager li{
-    display: none;
-}
-</style>
-<div>
-    <h1>Search for a movie</h1>
+    <a href="/"><h1>Search for a movie</h1></a>
     <div class="form-horizontal">
         <div class="form-group">
             <label for="search-field" class="col-xs-2 col-sm-1 col-sm-offset-1 control-label text-right">
                 Search:
             </label>
+
             <div class="col-xs-10 col-sm-9">
                 <input id="search-field" type="input" class="form-control"
-                       placeholder="Typ to search">
+                       placeholder="Loading..." disabled>
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1" id="alerts">
+            <!-- placeholder for javascript errors -->
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1">
-            <div id="result-list" class="list-group">
-              <li class="list-group-item">Start typing to search for a movie title</li>
+            <div class="panel-group" id="result-accordion" role="tablist" aria-multiselectable="true">
+
+                <!-- initial readme panel -->
+                <div class="panel panel-info">
+                    <div class="panel-body" id="explanation">
+                        Start typing to search for a movie title.
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1">
             <nav>
+                <!-- the pagers, initially not visible -->
                 <ul id="pager" class="pager">
                     <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Previous</a></li>
                     <li class="next"><a href="#">Next <span aria-hidden="true">&rarr;</span></a></li>
@@ -41,58 +49,8 @@ h1{
             </nav>
         </div>
     </div>
-
-    <!--<button id="api-call" class="btn btn-primary btn-lg" type="button">Do API</button>-->
-</div>
 {% endblock %}
 
 {% block script %}
-<script>
-var api = new API();
-$(document).ready(function(){
-    var pager_prev = $('#pager .previous');
-    var pager_next = $('#pager .next');
-    var result_list = $('#result-list');
-
-    function process_results(data){
-        //Set the pagers if applicable
-        if (data['page'] < data['total_pages']) {
-            pager_next.show();
-        } else {
-            pager_next.hide();
-        }
-        if (data['page'] > 1) {
-            pager_prev.show();
-        } else {
-            pager_prev.hide();
-        }
-
-        //fill the results list
-        result_list.empty();
-        for (var i = 0; i < data['results'].length; i++) {
-            var movie_data = data['results'][i];
-            var movie_el = $('<button/>', {
-                class: 'list-group-item movie-item',
-                text: movie_data['title']
-            }).appendTo(result_list);
-            //movie_el.click()
-        }
-    }
-
-    function process_error(xhr, textStatus){
-        if(xhr.status == 429){
-            //To many requests
-        }
-    }
-
-    var cached_value = null;
-    $('#search-field').on("keyup", function(e){
-        var previous_value = cached_value;
-        cached_value = $(this).val();
-        if (cached_value != previous_value) {
-            api.search(cached_value, process_results, process_error);
-        }
-    });
-});
-</script>
+    <script src="{% static "homepage.js" %}" type="text/javascript"></script>
 {% endblock %}

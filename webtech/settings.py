@@ -103,7 +103,12 @@ USE_TZ = True
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
 STATIC_URL = '/static/'
+
+# Settings for the theme switching
+SITE_CSS_TEMPLATES = BASE_DIR + '/static/templates/'
+SITE_CSS_TEMPLATE_URL = STATIC_URL + 'templates/'
 
 
 # Default settings of Django-Bootstrap3
