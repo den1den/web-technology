@@ -1,15 +1,18 @@
 'use strict';
+
 var app = angular.module('myapp',[
         'ngSanitize',
-        "ui.router",
-        'ui.select'
+        'ui.router',
+        'ui.select',
+        'djangoRESTResources' //connects django REST API and Angualar services (via djResource)
     ]);
+
 app.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
     $stateProvider
         .state('movie', {
             url: "", // /movie
-            templateUrl: "html/movies.html"
+            templateUrl: "html/movie.html"
         })
         .state('movie.list', {
             url: "",
@@ -30,6 +33,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             }
         })
 });
+
 var m_api_key = 'f260b6f56ad2d55f09a8935a464719b3';
 var m_api_url = 'http://api.themoviedb.org/3';
 app.controller('movieAPI', function ($scope, $http) {
@@ -66,7 +70,6 @@ app.controller('movieAPI', function ($scope, $http) {
             }
         }).then(function(response) {
             if ('results' in response.data) {
-                console.log(response.data['results']);
                 $scope.movies = response.data['results'];
             } else {
                 $scope.movies = [];
@@ -77,6 +80,40 @@ app.controller('movieAPI', function ($scope, $http) {
             // or server returns response with an error status.
         });
     };
+    $scope.movieChanged = function(movie){
+        console.log('movieChanged');
+        if(scope.movie != undefined){
+            console.log(scope.movie.id);
+        }
+    }
 });
+app.directive('movieSummary', function() {
+    return {
+        restrict: 'E',
+        templateUrl: 'html/movie_result.html',
+        scope: {
+            movie: '='
+        }
+    }
+});
+app.directive('movieChat', function(){
+    return {
+        restrict: 'E',
+        templateUrl: 'html/movie_chat.html',
+        //require: '^movieSummary',
+        scope: {
+            movie: '=' // XML-attribute model corresponds to HTML variable {{model}} (same as =model)
+        },
+        link: function(scope, element){
+            console.log('link');
+            if(scope.movie != undefined){
+                console.log(scope.movie.id);
+            }
+        }
+    }
+});
+
+var c_api_base = 'http://api.search-for-a-movie.tk/';
+
 
 var socket = io();

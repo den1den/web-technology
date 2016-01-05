@@ -1,12 +1,7 @@
 <h1>Search for a movie</h1>
-
-<a ui-sref=".list">Show List</a>
-<div ui-view></div>
 <div ng-app="myapp" ng-controller="movieAPI">
-    <pre>
-        {{result}}
-    </pre>
-    <p>Selected: {{movie.selected.title}}</p>
+    <movie-summary movie="movie.selected"></movie-summary>
+    <!--<p>Selected: {{movie.selected.title}}</p>-->
     <ui-select ng-model="movie.selected"
                theme="bootstrap"
                ng-disabled="disabled"
@@ -18,4 +13,5 @@
             <div ng-bind-html="movie.title | highlight: $select.search"></div>
         </ui-select-choices>
     </ui-select>
+    <movie-chat movie="movie.selected"></movie-chat>
 </div>

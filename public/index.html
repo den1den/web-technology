@@ -7,13 +7,17 @@
     <!-- css libs -->
     <link href="libs/bootstrap.min.css" rel="stylesheet">
     <link href="libs/select.min.css" rel="stylesheet">
+    <style>
+        .ui-select-container{
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
 
-<!-- navigation -->
+<!-- navigation
 <div class="container" id="page">
     <div class="navbar navbar-default">
-        <!-- mobile -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mainnavbar" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
@@ -24,7 +28,6 @@
             <a class="navbar-brand" href="#">Homepage</a>
         </div>
 
-        <!-- desktop -->
         <div class="collapse navbar-collapse" id="mainnavbar">
             <ul class="nav navbar-nav">
                 <li><a ui-sref="movie">Search for a movie</a></li>
@@ -32,7 +35,7 @@
             </ul>
         </div>
     </div>
-</div>
+</div>-->
 
 <!-- content -->
 <div class="container">
@@ -49,6 +52,7 @@
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="libs/bootstrap.min.js"></script>
 <script src="libs/select.min.js"></script>
+<script src="libs/angular-django-rest-resource.min.js"></script>
 
 <!-- javascript -->
 <script src="app.js"></script>
