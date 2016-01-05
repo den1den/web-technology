@@ -26,16 +26,6 @@ var m_api_key = 'f260b6f56ad2d55f09a8935a464719b3';
 var m_api_url = 'http://api.themoviedb.org/3';
 app.controller('movieAPI', function ($scope, $http, djResource) {
     $scope.result = 'Type a movie to see the results';
-    //$http.jsonp(m_api_url + '/search/movie', {
-    //    params: {
-    //        query: 'NNNNNNNNNNNNNNN',
-    //        page: page,
-    //        api_key: m_api_key,
-    //        callback: 'JSON_CALLBACK'
-    //    }
-    //}).then(function(response) {
-    //    $scope.result = response.data.results;
-    //});
 
     $scope.clear = function(){
         $scope.movie.selected = undefined;
@@ -93,7 +83,6 @@ app.directive('movieChat', function(){
             movie: '=' // XML-attribute model corresponds to HTML variable {{model}} (same as =model)
         },
         controller: function($scope){
-            $scope.chat = ["Test message"];
 			socket.on('chat message', function(msg){
 				$scope.chat.push(msg);
 				$scope.$apply();
@@ -101,6 +90,3 @@ app.directive('movieChat', function(){
         }
     }
 });
-
-var c_api_base = 'http://api.search-for-a-movie.tk/';
-
