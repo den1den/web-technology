@@ -62,3 +62,9 @@ target/
 .idea/
 *.sqlite3
 node_modules/
+logs/*
+!.gitkeep
+bower_components/
+tmp
+.DS_Store
+.idea

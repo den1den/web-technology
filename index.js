@@ -1,11 +1,27 @@
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+//constants
+var http_IP = '127.0.0.1',
+    http_port = 8090;
 
-app.get('/', function (req, res) {
-    res.sendfile('html/index.html');
-});
+//import
+var express = require('express'),
+    errorHandler = require('errorhandler'),
+    http = require('http'),
+    path = require("path"),
+    socket_io = require('socket.io');
 
+//init
+var app = module.exports = express(),
+    server = http.createServer(app),
+    io = socket_io(server);
+
+app.set('port', http_port);
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(errorHandler());
+
+// routing
+app.get('/', function(req, res){res.sendFile(path.join(__dirname, 'public', 'index.html'))});
+
+// io
 io.on('connection', function (socket) {
     console.log('a user connected');
     socket.on('disconnect', function () {
@@ -17,6 +33,7 @@ io.on('connection', function (socket) {
     });
 });
 
-http.listen(3000, function () {
-    console.log('listening on *:3000');
+//start server
+server.listen(app.get('port'), function () {
+    console.log('Express server listening on port ' + app.get('port'));
 });
