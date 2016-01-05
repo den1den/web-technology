@@ -14,5 +14,5 @@
             <div ng-bind-html="movie.title | highlight: $select.search"></div>
         </ui-select-choices>
     </ui-select>
-    <movie-chat movie="movie.selected"></movie-chat>
+    <movie-chat movie="movie.selected" chat="chats"></movie-chat>
 </div>

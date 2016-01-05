@@ -1,5 +1,7 @@
 'use strict';
 
+var socket = io();
+
 var app = angular.module('myapp',[
         'ngSanitize',
         'ui.router',
@@ -22,7 +24,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
 var m_api_key = 'f260b6f56ad2d55f09a8935a464719b3';
 var m_api_url = 'http://api.themoviedb.org/3';
-app.controller('movieAPI', function ($scope, $http) {
+app.controller('movieAPI', function ($scope, $http, djResource) {
     $scope.result = 'Type a movie to see the results';
     //$http.jsonp(m_api_url + '/search/movie', {
     //    params: {
@@ -68,8 +70,8 @@ app.controller('movieAPI', function ($scope, $http) {
     };
     $scope.movieChanged = function(movie){
         console.log('movieChanged');
-        if(scope.movie != undefined){
-            console.log(scope.movie.id);
+        if($scope.movie != undefined){
+            socket.emit('chat message', 'User is watching ' + $scope.movie.selected.title);
         }
     }
 });
@@ -90,16 +92,15 @@ app.directive('movieChat', function(){
         scope: {
             movie: '=' // XML-attribute model corresponds to HTML variable {{model}} (same as =model)
         },
-        link: function(scope, element){
-            console.log('link');
-            if(scope.movie != undefined){
-                console.log(scope.movie.id);
-            }
+        controller: function($scope){
+            $scope.chat = ["Test message"];
+			socket.on('chat message', function(msg){
+				$scope.chat.push(msg);
+				$scope.$apply();
+			});
         }
     }
 });
 
 var c_api_base = 'http://api.search-for-a-movie.tk/';
 
-
-var socket = io();

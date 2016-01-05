@@ -10,4 +10,8 @@
     <div class="panel-heading">
         <h4>Chat</h4>
     </div>
+	<div class="panel-body">
+		<span>{{ state }}</span>
+		<li ng-repeat="c in chat track by $index">{{ c }}</li>
+    </div>
 </div>
