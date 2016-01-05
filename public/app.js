@@ -1,36 +1,44 @@
-/**
- * Created by Dennis on 5-1-2016.
- */
 'use strict';
-
-var myapp = angular.module('myApp', ["ui.router"])
-myapp.config(function($stateProvider, $urlRouterProvider){
-
-    // For any unmatched url, send to /route1
-    $urlRouterProvider.otherwise("/route1")
-
+var app = angular.module('myapp',[
+        "ui.router"
+    ]);
+app.config(function ($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise("/");
     $stateProvider
-        .state('route1', {
-            url: "/route1",
-            templateUrl: "html/state1.html"
+        .state('movie', {
+            url: "", // /movie
+            templateUrl: "html/movie.html"
         })
-        .state('route1.list', {
-            url: "/list",
-            templateUrl: "html/state1.list.html",
-            controller: function($scope){
+        .state('movie.list', {
+            url: "",
+            templateUrl: "html/movie.list.html",
+            controller: function ($scope) {
                 $scope.items = ["A", "List", "Of", "Items"];
             }
         })
-
-        .state('route2', {
-            url: "/route2",
-            templateUrl: "html/state2.html"
+        .state('comments', {
+            url: "",
+            templateUrl: "html/comments.html"
         })
-        .state('route2.list', {
-            url: "/list",
-            templateUrl: "html/state2.list.html",
-            controller: function($scope){
+        .state('comments.list', {
+            url: "",
+            templateUrl: "html/comments.list.html",
+            controller: function ($scope) {
                 $scope.things = ["A", "Set", "Of", "Things"];
             }
         })
 });
+app.controller('movieAPI', function ($scope, $http) {
+    var url_args = '?api_key=f260b6f56ad2d55f09a8935a464719b3&callback=JSON_CALLBACK';
+    var base_url = 'http://api.themoviedb.org/3';
+
+    $scope.result = 'Loading API';
+
+    $http.jsonp(base_url + '/movie/5' + url_args).then(function(data, status){
+        $scope.result = JSON.stringify(data);
+    }, function(data, status){
+        $scope.result = JSON.stringify(data);
+    });
+});
+
+var socket = io();

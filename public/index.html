@@ -1,76 +1,52 @@
 <!DOCTYPE html>
+<!--suppress HtmlUnknownTarget -->
 <html ng-app="myapp">
-
 <head>
-    <title>AngularJS: UI-Router Quick Start</title>
-    <!-- Bootstrap CSS -->
-    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <title>Search-for-a-movie.tk</title>
+    <!-- bootstrap -->
+    <link href="libs/bootstrap.min.css" rel="stylesheet">
 </head>
+<body>
 
-<body class="container">
-<p><i>Best viewed in pop-out mode to see location changes. Click blue button on the right.</i></p>
+<!-- navigation -->
+<div class="container" id="page">
+    <div class="navbar navbar-default">
+        <!-- mobile -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mainnavbar" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Homepage</a>
+        </div>
 
-<div class="navbar">
-    <div class="navbar-inner">
-        <a class="brand" href="#">Quick Start</a>
-        <ul class="nav">
-            <li><a ui-sref="route1">Route 1</a></li>
-            <li><a ui-sref="route2">Route 2</a></li>
-        </ul>
+        <!-- desktop -->
+        <div class="collapse navbar-collapse" id="mainnavbar">
+            <ul class="nav navbar-nav">
+                <li><a ui-sref="movie">Search for a movie</a></li>
+                <li><a ui-sref="comments">Comment on a movie</a></li>
+            </ul>
+        </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="span12">
-        <div class="well" ui-view></div>
+<!-- content -->
+<div class="container">
+    <div class="" ui-view>
+        Loading...
     </div>
 </div>
 
-<!-- Angular -->
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.js"></script>
-<!-- UI-Router -->
-<script src="//angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
-
-<!-- App Script -->
-<script>
-    var myapp = angular.module('myapp', ["ui.router"]);
-    myapp.config(function ($stateProvider, $urlRouterProvider) {
-
-        // For any unmatched url, send to /route1
-        $urlRouterProvider.otherwise("/route1");
-
-        $stateProvider
-                .state('route1', {
-                    url: "/route1",
-                    templateUrl: "html/state1.html"
-                })
-                .state('route1.list', {
-                    url: "/list",
-                    templateUrl: "html/state1.list.html",
-                    controller: function ($scope) {
-                        $scope.items = ["A", "List", "Of", "Items"];
-                    }
-                })
-
-                .state('route2', {
-                    url: "/route2",
-                    templateUrl: "html/state2.html"
-                })
-                .state('route2.list', {
-                    url: "/list",
-                    templateUrl: "html/state2.list.html",
-                    controller: function ($scope) {
-                        $scope.things = ["A", "Set", "Of", "Things"];
-                    }
-                })
-    })
-</script>
-
+<!-- libs -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.29/angular.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
-<script>
-    var socket = io();
-</script>
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="libs/bootstrap.min.js"></script>
 
+<!-- javascript -->
+<script src="app.js"></script>
 </body>
-
 </html>
