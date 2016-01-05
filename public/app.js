@@ -1,17 +1,19 @@
 'use strict';
 var app = angular.module('myapp',[
-        "ui.router"
+        'ngSanitize',
+        "ui.router",
+        'ui.select'
     ]);
 app.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
     $stateProvider
         .state('movie', {
             url: "", // /movie
-            templateUrl: "html/movie.html"
+            templateUrl: "html/movies.html"
         })
         .state('movie.list', {
             url: "",
-            templateUrl: "html/movie.list.html",
+            templateUrl: "html/movies.list.html",
             controller: function ($scope) {
                 $scope.items = ["A", "List", "Of", "Items"];
             }
@@ -28,17 +30,53 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             }
         })
 });
+var m_api_key = 'f260b6f56ad2d55f09a8935a464719b3';
+var m_api_url = 'http://api.themoviedb.org/3';
 app.controller('movieAPI', function ($scope, $http) {
-    var url_args = '?api_key=f260b6f56ad2d55f09a8935a464719b3&callback=JSON_CALLBACK';
-    var base_url = 'http://api.themoviedb.org/3';
+    $scope.result = 'Type a movie to see the results';
+    //$http.jsonp(m_api_url + '/search/movie', {
+    //    params: {
+    //        query: 'NNNNNNNNNNNNNNN',
+    //        page: page,
+    //        api_key: m_api_key,
+    //        callback: 'JSON_CALLBACK'
+    //    }
+    //}).then(function(response) {
+    //    $scope.result = response.data.results;
+    //});
 
-    $scope.result = 'Loading API';
-
-    $http.jsonp(base_url + '/movie/5' + url_args).then(function(data, status){
-        $scope.result = JSON.stringify(data);
-    }, function(data, status){
-        $scope.result = JSON.stringify(data);
-    });
+    $scope.clear = function(){
+        $scope.movie.selected = undefined;
+    };
+    $scope.movie = {};
+    $scope.refreshMovie = function(query) {
+        var page = undefined;
+        if (page == undefined){
+            page = 1;
+        }
+        if (query == ''){
+            return undefined;
+        }
+        else return $http.jsonp(m_api_url + '/search/movie', {
+            params: {
+                query: query,
+                page: page,
+                api_key: m_api_key,
+                callback: 'JSON_CALLBACK'
+            }
+        }).then(function(response) {
+            if ('results' in response.data) {
+                console.log(response.data['results']);
+                $scope.movies = response.data['results'];
+            } else {
+                $scope.movies = [];
+            }
+        }, function errorCallback(response) {
+            console.log('Error in API call');
+            // called asynchronously if an error occurs
+            // or server returns response with an error status.
+        });
+    };
 });
 
 var socket = io();
