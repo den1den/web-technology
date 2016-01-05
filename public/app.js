@@ -11,26 +11,12 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
     $stateProvider
         .state('movie', {
-            url: "", // /movie
+            url: "/",
             templateUrl: "html/movie.html"
         })
-        .state('movie.list', {
-            url: "",
-            templateUrl: "html/movies.list.html",
-            controller: function ($scope) {
-                $scope.items = ["A", "List", "Of", "Items"];
-            }
-        })
-        .state('comments', {
-            url: "",
-            templateUrl: "html/comments.html"
-        })
-        .state('comments.list', {
-            url: "",
-            templateUrl: "html/comments.list.html",
-            controller: function ($scope) {
-                $scope.things = ["A", "Set", "Of", "Things"];
-            }
+        .state('about', {
+            url: "/about",
+            templateUrl: "html/about.html"
         })
 });
 
