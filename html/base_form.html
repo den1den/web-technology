@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+{% load bootstrap3 %}
+{% load staticfiles %}
+{% block content %}
+    <div class="row">
+    <div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-12">
+        <h1>{{ title }}</h1>
+        <form action="{% block action_url %}{% endblock %}" method="post" class="form">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">
+                    {% block submit_text %}{% endblock %}
+                </button>
+            {% endbuttons %}
+        </form>
+        {% block post_form %}{% endblock %}
+    </div>
+    </div>
+{% endblock %}
